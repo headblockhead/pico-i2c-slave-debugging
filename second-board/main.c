@@ -50,15 +50,26 @@ void i2c_devices_init(void) {
 }
 
 void core0_main(void) {
+  bool send = true;
   while (true) {
-    uint8_t send_buffer[10];
-    memset(send_buffer, 0, 10);
-    i2c_write_timeout_us(master_i2c_inst, their_address, send_buffer, 10, false,
-                         1000);
-    gpio_put(15, 1);
-    sleep_ms(100);
-    gpio_put(15, 0);
-    sleep_ms(100);
+    if (send) {
+      uint8_t send_buffer[10];
+      memset(send_buffer, 0, 10);
+      i2c_write_timeout_us(master_i2c_inst, their_address, send_buffer, 10,
+                           false, 1000);
+    } else {
+      uint8_t send_buffer[1];
+      memset(send_buffer, 0, 1);
+      i2c_write_timeout_us(master_i2c_inst, their_address, send_buffer, 1,
+                           false, 1000);
+
+      uint8_t recv_buffer[9];
+      memset(recv_buffer, 0, 9);
+      i2c_read_timeout_us(master_i2c_inst, their_address, recv_buffer, 9, false,
+                          1000);
+    }
+    sleep_ms(5);
+    send = !send;
   }
 }
 

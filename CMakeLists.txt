@@ -24,7 +24,5 @@ endif()
 # Initialize the SDK
 pico_sdk_init()
 
-add_subdirectory(${PROJECT_SOURCE_DIR}/shared/communication communication)
-
 add_subdirectory(first-board)
 add_subdirectory(second-board)
