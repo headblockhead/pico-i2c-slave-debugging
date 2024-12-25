@@ -1,6 +1,6 @@
-#include "hardware/i2c.h"
-#include "pico/stdlib.h"
+#include <hardware/i2c.h>
 #include <pico/i2c_slave.h>
+#include <pico/stdlib.h>
 #include <stdio.h>
 #include <string.h>
 
@@ -77,8 +77,6 @@ int main(void) {
   gpio_init(15);
   gpio_set_dir(15, 1);
   gpio_put(15, 0);
-
-  sleep_ms(1000);
 
   i2c_devices_init();
 
